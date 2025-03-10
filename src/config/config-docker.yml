@@ -13,7 +13,7 @@ Postgres:
     user: postgres
     password: admin
     dbName: car_sale_db
-    sslMode: false
+    sslMode: disable
 Redis:
     host: redis_container
     port: 6379

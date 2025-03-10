@@ -1,6 +1,7 @@
 Server:
     Port: 8000
     RunMod: debug
+    timeZone: Asia/Tehran
 Logger:
     filePath: ../logs/logs.log
     Encoding: json
@@ -13,7 +14,10 @@ Postgres:
     user: postgres
     password: admin
     dbName: car_sale_db
-    sslMode: false
+    sslMode: disable
+    maxIdleConnection: 10
+    maxOpenConnections: 100
+    connMaxLifetime: 5
 Redis:
     host: localhost
     port: 6379
