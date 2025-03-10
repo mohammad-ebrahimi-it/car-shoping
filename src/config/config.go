@@ -4,12 +4,14 @@ import (
 	"errors"
 	"github.com/spf13/viper"
 	"log"
+	"time"
 )
 
 type Config struct {
 	Server   ServerConfig
 	Postgres PostgresConfig
 	Redis    RedisConfig
+	Password PasswordConfig
 }
 type ServerConfig struct {
 	Port    string
@@ -26,12 +28,25 @@ type PostgresConfig struct {
 }
 
 type RedisConfig struct {
-	Host        string
-	Port        string
-	Db          string
-	Password    string
-	PoolSize    string
-	PoolTimeout string
+	Host               string
+	Port               string
+	Db                 string
+	Password           string
+	DialTimeout        time.Duration
+	ReadTimeout        time.Duration
+	WriteTimeout       time.Duration
+	PoolSize           int
+	PoolTimeout        time.Duration
+	IdleCheckFrequency time.Duration
+}
+
+type PasswordConfig struct {
+	IncludeChars     bool
+	IncludeDigits    bool
+	MinLength        int
+	MaxLength        int
+	IncludeUppercase bool
+	IncludeLowercase bool
 }
 
 func GetConfig() *Config {

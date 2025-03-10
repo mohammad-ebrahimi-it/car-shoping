@@ -10,16 +10,18 @@ import (
 	"github.com/mohammad-ebrahimi-it/car-shoping/config"
 )
 
-func InitServer() {
-	config := config.GetConfig()
+func InitServer(cfg *config.Config) {
 	r := gin.New()
-	val, ok := binding.Validator.Engine().(*validator.Validate)
-
-	if ok {
-		val.RegisterValidation("mobile", validations.IranianMobileNumberValidator, true)
-	}
+	RegisterValidators()
 
 	r.Use(gin.Logger(), gin.Recovery())
+
+	RegisterRoutes(r)
+
+	r.Run(fmt.Sprintf(":%s", cfg.Server.Port))
+}
+
+func RegisterRoutes(r *gin.Engine) {
 
 	v1 := r.Group("/api/v1")
 
@@ -33,6 +35,12 @@ func InitServer() {
 
 		routers.Health(health)
 	}
+}
 
-	r.Run(fmt.Sprintf(":%s", config.Server.Port))
+func RegisterValidators() {
+	val, ok := binding.Validator.Engine().(*validator.Validate)
+
+	if ok {
+		val.RegisterValidation("mobile", validations.IranianMobileNumberValidator, true)
+	}
 }
