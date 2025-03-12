@@ -20,7 +20,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	db.CloseDb()
+	defer db.CloseDb()
 
 	api.InitServer(cfg)
 }
