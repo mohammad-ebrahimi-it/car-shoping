@@ -5,20 +5,22 @@ import (
 	"github.com/mohammad-ebrahimi-it/car-shoping/config"
 	"github.com/mohammad-ebrahimi-it/car-shoping/data/cache"
 	"github.com/mohammad-ebrahimi-it/car-shoping/data/db"
+	"github.com/mohammad-ebrahimi-it/car-shoping/pkg/logging"
 )
 
 func main() {
 	cfg := config.GetConfig()
+	logger := logging.NewZapLogger(cfg)
 
 	err := cache.InitRedis(cfg)
 	if err != nil {
-		panic(err)
+		logger.Fatal(logging.Redis, logging.Startup, err.Error(), nil)
 	}
 	defer cache.CloseRedis()
 
 	err = db.InitDb(cfg)
 	if err != nil {
-		panic(err)
+		logger.Fatal(logging.Postgres, logging.Startup, err.Error(), nil)
 	}
 	defer db.CloseDb()
 

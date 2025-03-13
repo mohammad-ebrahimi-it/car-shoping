@@ -12,6 +12,7 @@ type Config struct {
 	Postgres PostgresConfig
 	Redis    RedisConfig
 	Password PasswordConfig
+	Logger   LoggerConfig
 }
 type ServerConfig struct {
 	Port     string
@@ -51,6 +52,12 @@ type PasswordConfig struct {
 	MaxLength        int
 	IncludeUppercase bool
 	IncludeLowercase bool
+}
+
+type LoggerConfig struct {
+	FilePath string
+	Encoding string
+	Level    string
 }
 
 func GetConfig() *Config {
