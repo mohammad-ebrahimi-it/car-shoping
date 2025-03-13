@@ -10,7 +10,7 @@ import (
 
 func main() {
 	cfg := config.GetConfig()
-	logger := logging.NewZapLogger(cfg)
+	logger := logging.NewLogger(cfg)
 
 	err := cache.InitRedis(cfg)
 	if err != nil {

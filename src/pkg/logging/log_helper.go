@@ -10,13 +10,23 @@ func mapToZapParams(extra map[ExtraKey]interface{}) []interface{} {
 	return params
 }
 
-func prepareLog(cat Category, sub SubCategory, extra map[ExtraKey]interface{}) []interface{} {
+func prepareZepParams(cat Category, sub SubCategory, extra map[ExtraKey]interface{}) []interface{} {
 	if extra == nil {
 		extra = make(map[ExtraKey]interface{}, 0)
 	}
 	extra["Category"] = cat
 	extra["SubCategory"] = sub
 	params := mapToZapParams(extra)
+
+	return params
+}
+
+func prepareZeroParams(extra map[ExtraKey]interface{}) map[string]interface{} {
+	params := map[string]interface{}{}
+
+	for key, value := range extra {
+		params[string(key)] = value
+	}
 
 	return params
 }
