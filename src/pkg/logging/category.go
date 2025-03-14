@@ -45,4 +45,6 @@ const (
 	Latency      ExtraKey = "Latency"
 	Body         ExtraKey = "Body"
 	ErrorMessage ExtraKey = "ErrorMessage"
+	RequestBody  ExtraKey = "RequestBody"
+	ResponseBody ExtraKey = "ResponseBody"
 )

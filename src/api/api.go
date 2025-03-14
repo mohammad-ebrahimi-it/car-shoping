@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/validator/v10"
+	"github.com/mohammad-ebrahimi-it/car-shoping/api/middlewares"
 	"github.com/mohammad-ebrahimi-it/car-shoping/api/routers"
 	"github.com/mohammad-ebrahimi-it/car-shoping/api/validations"
 	"github.com/mohammad-ebrahimi-it/car-shoping/config"
@@ -18,6 +19,7 @@ func InitServer(cfg *config.Config) {
 	RegisterValidators()
 
 	r.Use(gin.Logger(), gin.Recovery())
+	r.Use(middlewares.DefaultStructuredLogger(cfg))
 
 	RegisterRoutes(r)
 	RegisterSwagger(r, cfg)
