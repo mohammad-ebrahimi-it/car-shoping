@@ -2,9 +2,12 @@ package migrations
 
 import (
 	"github.com/mohammad-ebrahimi-it/car-shoping/config"
+	"github.com/mohammad-ebrahimi-it/car-shoping/constans"
 	"github.com/mohammad-ebrahimi-it/car-shoping/data/db"
 	"github.com/mohammad-ebrahimi-it/car-shoping/data/models"
 	"github.com/mohammad-ebrahimi-it/car-shoping/pkg/logging"
+	"golang.org/x/crypto/bcrypt"
+	"gorm.io/gorm"
 )
 
 var logger = logging.NewLogger(config.GetConfig())
@@ -12,18 +15,26 @@ var logger = logging.NewLogger(config.GetConfig())
 func UP_1() {
 	database := db.GetDb()
 
+	createTables(database)
+
+	createDefaultInformation(database)
+}
+
+func createTables(database *gorm.DB) {
+
 	var tables []interface{}
 
 	country := models.Country{}
 	city := models.City{}
+	user := models.User{}
+	role := models.Role{}
+	userRole := models.UserRole{}
 
-	if !database.Migrator().HasTable(country) {
-		tables = append(tables, country)
-	}
-
-	if !database.Migrator().HasTable(city) {
-		tables = append(tables, city)
-	}
+	tables = addNameTable(database, city, tables)
+	tables = addNameTable(database, country, tables)
+	tables = addNameTable(database, user, tables)
+	tables = addNameTable(database, role, tables)
+	tables = addNameTable(database, userRole, tables)
 
 	err := database.Migrator().CreateTable(tables...)
 
@@ -32,4 +43,63 @@ func UP_1() {
 	}
 
 	logger.Info(logging.Postgres, logging.Migration, "migration succeeded", nil)
+
+}
+
+func addNameTable(database *gorm.DB, model interface{}, tables []interface{}) []interface{} {
+	if !database.Migrator().HasTable(model) {
+		tables = append(tables, model)
+	}
+
+	return tables
+}
+
+func createDefaultInformation(database *gorm.DB) {
+
+	adminRole := models.Role{Name: constans.AdminRoleName}
+	createRoleIfExists(database, &adminRole)
+
+	defaultRole := models.Role{Name: constans.DefaultRoleName}
+	createRoleIfExists(database, &defaultRole)
+
+	password, _ := bcrypt.GenerateFromPassword([]byte("password"), bcrypt.DefaultCost)
+	user := models.User{
+		Username:  constans.DefaultUserName,
+		FirstName: "test",
+		LastName:  "test",
+		Mobile:    "09900723195",
+		Email:     "m@gmail.com",
+		Password:  string(password),
+	}
+	createAdminUserIfNotExists(database, &user, adminRole.Id)
+
+}
+
+func createRoleIfExists(database *gorm.DB, role *models.Role) {
+	exists := 0
+	database.
+		Model(&models.Role{}).
+		Select("1").
+		Where("name = ?", role.Name).
+		First(&exists)
+
+	if exists == 0 {
+		database.Create(role)
+	}
+}
+
+func createAdminUserIfNotExists(database *gorm.DB, user *models.User, roleId int) {
+	exists := 0
+	database.
+		Model(&models.User{}).
+		Select("1").
+		Where("username = ?", user.Username).
+		First(&exists)
+
+	if exists == 0 {
+		database.Create(user)
+		ur := models.UserRole{UserId: user.Id, RoleId: roleId}
+
+		database.Create(&ur)
+	}
 }
