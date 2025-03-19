@@ -19,11 +19,12 @@ const (
 	Startup         SubCategory = "Startup"
 	ExternalService SubCategory = "ExternalService"
 
-	Select   SubCategory = "Select"
-	Rollback SubCategory = "Rollback"
-	Update   SubCategory = "Update"
-	Delete   SubCategory = "Delete"
-	Insert   SubCategory = "Insert"
+	Migration SubCategory = "Migration"
+	Select    SubCategory = "Select"
+	Rollback  SubCategory = "Rollback"
+	Update    SubCategory = "Update"
+	Delete    SubCategory = "Delete"
+	Insert    SubCategory = "Insert"
 
 	Api                 SubCategory = "Api"
 	HashPassword        SubCategory = "HashPassword"

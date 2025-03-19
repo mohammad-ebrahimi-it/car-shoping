@@ -5,6 +5,7 @@ import (
 	"github.com/mohammad-ebrahimi-it/car-shoping/config"
 	"github.com/mohammad-ebrahimi-it/car-shoping/data/cache"
 	"github.com/mohammad-ebrahimi-it/car-shoping/data/db"
+	"github.com/mohammad-ebrahimi-it/car-shoping/data/db/migrations"
 	"github.com/mohammad-ebrahimi-it/car-shoping/pkg/logging"
 )
 
@@ -22,6 +23,9 @@ func main() {
 	if err != nil {
 		logger.Fatal(logging.Postgres, logging.Startup, err.Error(), nil)
 	}
+
+	migrations.UP_1()
+
 	defer db.CloseDb()
 
 	api.InitServer(cfg)
