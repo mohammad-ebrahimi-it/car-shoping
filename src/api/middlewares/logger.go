@@ -6,6 +6,7 @@ import (
 	"github.com/mohammad-ebrahimi-it/car-shoping/config"
 	"github.com/mohammad-ebrahimi-it/car-shoping/pkg/logging"
 	"io/ioutil"
+	"strings"
 	"time"
 )
 
@@ -32,6 +33,9 @@ func DefaultStructuredLogger(cfg *config.Config) gin.HandlerFunc {
 
 func structuredLogger(logger logging.Logger) gin.HandlerFunc {
 	return func(c *gin.Context) {
+		if strings.Contains(c.FullPath(), "swagger") {
+			c.Next()
+		}
 		blw := &bodyLogWriter{body: bytes.NewBufferString(""), ResponseWriter: c.Writer}
 		start := time.Now()
 		path := c.FullPath()
