@@ -21,13 +21,13 @@ func InitServer(cfg *config.Config) {
 	r.Use(gin.Logger(), gin.Recovery())
 	r.Use(middlewares.DefaultStructuredLogger(cfg))
 
-	RegisterRoutes(r)
+	RegisterRoutes(r, cfg)
 	RegisterSwagger(r, cfg)
 
 	r.Run(fmt.Sprintf(":%s", cfg.Server.Port))
 }
 
-func RegisterRoutes(r *gin.Engine) {
+func RegisterRoutes(r *gin.Engine, cfg *config.Config) {
 
 	v1 := r.Group("/api/v1")
 
@@ -40,6 +40,9 @@ func RegisterRoutes(r *gin.Engine) {
 		health := v1.Group("/health")
 
 		routers.Health(health)
+
+		users := v1.Group("/users")
+		routers.User(users, cfg)
 	}
 }
 

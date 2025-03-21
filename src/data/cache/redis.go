@@ -1,6 +1,7 @@
 package cache
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/go-redis/redis/v7"
 	"github.com/mohammad-ebrahimi-it/car-shoping/config"
@@ -37,4 +38,30 @@ func GetRedis() *redis.Client {
 
 func CloseRedis() {
 	redisClient.Close()
+}
+
+func Set[T any](c *redis.Client, key string, value T, duration time.Duration) error {
+	val, err := json.Marshal(value)
+
+	if err != nil {
+		return err
+	}
+
+	return c.Set(key, string(val), duration).Err()
+}
+
+func Get[T any](c *redis.Client, key string) (T, error) {
+	var dest T = *new(T)
+	v, err := c.Get(key).Result()
+	if err != nil {
+		return dest, err
+	}
+
+	err = json.Unmarshal([]byte(v), &dest)
+
+	if err != nil {
+		return dest, err
+	}
+
+	return dest, nil
 }
