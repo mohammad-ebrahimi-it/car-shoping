@@ -8,6 +8,55 @@ definitions:
     required:
     - mobile_number
     type: object
+  dto.LoginByUsernameRequest:
+    properties:
+      password:
+        minLength: 6
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  dto.RegisterLoginByMobileNumber:
+    properties:
+      mobileNumber:
+        maxLength: 11
+        minLength: 11
+        type: string
+      otp:
+        maxLength: 6
+        minLength: 6
+        type: string
+    required:
+    - mobileNumber
+    - otp
+    type: object
+  dto.RegisterUserByUsernameRequest:
+    properties:
+      email:
+        minLength: 6
+        type: string
+      firstName:
+        minLength: 3
+        type: string
+      lastName:
+        minLength: 3
+        type: string
+      password:
+        minLength: 6
+        type: string
+      username:
+        minLength: 5
+        type: string
+    required:
+    - email
+    - firstName
+    - lastName
+    - password
+    - username
+    type: object
   handlers.Person:
     properties:
       first_name:
@@ -91,6 +140,96 @@ paths:
       summary: HealthPost
       tags:
       - HealthPost
+  /v1/users/login-by-mobile/:
+    post:
+      consumes:
+      - application/json
+      description: send otp to user
+      parameters:
+      - description: RegisterByUsernameRequest
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.RegisterLoginByMobileNumber'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/helper.BaseHttpResponse'
+        "400":
+          description: Failure
+          schema:
+            $ref: '#/definitions/helper.BaseHttpResponse'
+        "409":
+          description: Failure
+          schema:
+            $ref: '#/definitions/helper.BaseHttpResponse'
+      summary: Send Otp To User
+      tags:
+      - users
+  /v1/users/login-by-username/:
+    post:
+      consumes:
+      - application/json
+      description: send otp to user
+      parameters:
+      - description: LoginByUsernameRequest
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.LoginByUsernameRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/helper.BaseHttpResponse'
+        "400":
+          description: Failure
+          schema:
+            $ref: '#/definitions/helper.BaseHttpResponse'
+        "409":
+          description: Failure
+          schema:
+            $ref: '#/definitions/helper.BaseHttpResponse'
+      summary: Send Otp To User
+      tags:
+      - users
+  /v1/users/register-by-username/:
+    post:
+      consumes:
+      - application/json
+      description: send otp to user
+      parameters:
+      - description: RegisterUserByUsernameRequest
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.RegisterUserByUsernameRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/helper.BaseHttpResponse'
+        "400":
+          description: Failure
+          schema:
+            $ref: '#/definitions/helper.BaseHttpResponse'
+        "409":
+          description: Failure
+          schema:
+            $ref: '#/definitions/helper.BaseHttpResponse'
+      summary: Send Otp To User
+      tags:
+      - users
   /v1/users/send-otp/:
     post:
       consumes:

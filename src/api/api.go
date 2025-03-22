@@ -51,6 +51,7 @@ func RegisterValidators() {
 
 	if ok {
 		val.RegisterValidation("mobile", validations.IranianMobileNumberValidator, true)
+		val.RegisterValidation("password", validations.PasswordValidator, true)
 	}
 }
 
