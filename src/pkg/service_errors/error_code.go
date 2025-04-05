@@ -6,6 +6,9 @@ const OtpInValid string = "otp invalid"
 
 const UnExpectedError string = "otp unexpected"
 const ClaimNotFound string = "claim not found"
+const TokenRequired string = "token required"
+const TokenExpired string = "token expired"
+const TokenInvalid string = "token invalid"
 
 const EmailExists string = "email exists"
 const UsernameExists string = "username exists"

@@ -18,7 +18,7 @@ func InitServer(cfg *config.Config) {
 	r := gin.New()
 	RegisterValidators()
 
-	r.Use(gin.Logger(), gin.Recovery())
+	r.Use(gin.Logger(), gin.CustomRecovery(middlewares.ErrorHandler))
 	r.Use(middlewares.DefaultStructuredLogger(cfg))
 
 	RegisterRoutes(r, cfg)
