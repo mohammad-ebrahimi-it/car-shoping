@@ -9,6 +9,9 @@ import (
 	"github.com/mohammad-ebrahimi-it/car-shoping/pkg/logging"
 )
 
+// @securityDefinitions.apikey AuthBearer
+// @in header
+// @name Authorization
 func main() {
 	cfg := config.GetConfig()
 	logger := logging.NewLogger(cfg)
