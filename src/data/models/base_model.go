@@ -9,9 +9,9 @@ import (
 type BaseModel struct {
 	Id int `gorm:"primarykey"`
 
-	CreatedAt time.Time    `gorm:"type:TIMESTAMP with time zone;not null"`
-	ModifyAt  sql.NullTime `gorm:"type:TIMESTAMP with time zone;null"`
-	DeletedAt sql.NullTime `gorm:"type:TIMESTAMP with time zone;null"`
+	CreatedAt  time.Time    `gorm:"type:TIMESTAMP with time zone;not null"`
+	ModifiedAt sql.NullTime `gorm:"type:TIMESTAMP with time zone;null"`
+	DeletedAt  sql.NullTime `gorm:"type:TIMESTAMP with time zone;null"`
 
 	CreatedBy  int            `gorm:"not null"`
 	ModifiedBy *sql.NullInt64 `gorm:"null"`
@@ -39,7 +39,7 @@ func (m *BaseModel) BeforeUpdate(tx *gorm.DB) (err error) {
 		userId = &sql.NullInt64{Valid: true, Int64: int64(value.(float64))}
 	}
 
-	m.ModifyAt = sql.NullTime{Time: time.Now().UTC(), Valid: true}
+	m.ModifiedAt = sql.NullTime{Time: time.Now().UTC(), Valid: true}
 	m.ModifiedBy = userId
 	return
 }

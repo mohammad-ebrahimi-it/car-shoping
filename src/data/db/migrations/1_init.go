@@ -30,11 +30,11 @@ func createTables(database *gorm.DB) {
 	role := models.Role{}
 	userRole := models.UserRole{}
 
-	tables = addNameTable(database, city, tables)
 	tables = addNameTable(database, country, tables)
-	tables = addNameTable(database, user, tables)
 	tables = addNameTable(database, role, tables)
 	tables = addNameTable(database, userRole, tables)
+	tables = addNameTable(database, user, tables)
+	tables = addNameTable(database, city, tables)
 
 	err := database.Migrator().CreateTable(tables...)
 

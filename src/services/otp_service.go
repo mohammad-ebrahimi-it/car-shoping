@@ -67,8 +67,9 @@ func (s *OtpService) ValidateOtp(mobileNumber, otp string) error {
 	} else if res.Value == otp && !res.Used {
 		res.Used = true
 		err = cache.Set(s.redis, key, res, s.cfg.Otp.ExpireTime*time.Second)
-
-		return err
+		if err != nil {
+			return err
+		}
 	}
 
 	return nil
