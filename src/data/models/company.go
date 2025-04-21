@@ -1,8 +1,9 @@
 package models
 
-type City struct {
+type Company struct {
 	BaseModel
-	Name      string `gorm:"size:10;type:string;not null"`
-	CountryId int
+	Name      string  `gorm:"size=15;type=string;not null"`
 	Country   Country `gorm:"foreignKey:CountryId;constraint:OnUpdate:NO ACTION,OnDelete:NO ACTION;"`
+	CountryId int
+	CarModels *[]CarModel
 }
