@@ -40,7 +40,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.CreateUpdateCountryRequest"
+                            "$ref": "#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_dto.CreateUpdateCountryRequest"
                         }
                     }
                 ],
@@ -50,13 +50,13 @@ const docTemplate = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/helper.BaseHttpResponse"
+                                    "$ref": "#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "result": {
-                                            "$ref": "#/definitions/dto.CountryResponse"
+                                            "$ref": "#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_dto.CountryResponse"
                                         }
                                     }
                                 }
@@ -66,7 +66,64 @@ const docTemplate = `{
                     "400": {
                         "description": "Failure",
                         "schema": {
-                            "$ref": "#/definitions/helper.BaseHttpResponse"
+                            "$ref": "#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/countries/get-by-filter": {
+            "post": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Get Countries",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Countries"
+                ],
+                "summary": "Get Countries",
+                "parameters": [
+                    {
+                        "description": "Request",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_dto.PaginationInputWithFilter"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Country response",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_dto.PageList-github_com_mohammad-ebrahimi-it_car-shoping_api_dto_CountryResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Failure",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse"
                         }
                     }
                 }
@@ -105,13 +162,13 @@ const docTemplate = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/helper.BaseHttpResponse"
+                                    "$ref": "#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "result": {
-                                            "$ref": "#/definitions/dto.CountryResponse"
+                                            "$ref": "#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_dto.CountryResponse"
                                         }
                                     }
                                 }
@@ -121,7 +178,7 @@ const docTemplate = `{
                     "400": {
                         "description": "Failure",
                         "schema": {
-                            "$ref": "#/definitions/helper.BaseHttpResponse"
+                            "$ref": "#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse"
                         }
                     }
                 }
@@ -157,7 +214,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.CreateUpdateCountryRequest"
+                            "$ref": "#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_dto.CreateUpdateCountryRequest"
                         }
                     }
                 ],
@@ -167,13 +224,13 @@ const docTemplate = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/helper.BaseHttpResponse"
+                                    "$ref": "#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "result": {
-                                            "$ref": "#/definitions/dto.CountryResponse"
+                                            "$ref": "#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_dto.CountryResponse"
                                         }
                                     }
                                 }
@@ -183,7 +240,7 @@ const docTemplate = `{
                     "400": {
                         "description": "Failure",
                         "schema": {
-                            "$ref": "#/definitions/helper.BaseHttpResponse"
+                            "$ref": "#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse"
                         }
                     }
                 }
@@ -218,13 +275,13 @@ const docTemplate = `{
                     "201": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/helper.BaseHttpResponse"
+                            "$ref": "#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse"
                         }
                     },
                     "400": {
                         "description": "Failure",
                         "schema": {
-                            "$ref": "#/definitions/helper.BaseHttpResponse"
+                            "$ref": "#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse"
                         }
                     }
                 }
@@ -247,13 +304,13 @@ const docTemplate = `{
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/helper.BaseHttpResponse"
+                            "$ref": "#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse"
                         }
                     },
                     "400": {
                         "description": "Failure",
                         "schema": {
-                            "$ref": "#/definitions/helper.BaseHttpResponse"
+                            "$ref": "#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse"
                         }
                     }
                 }
@@ -277,7 +334,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/handlers.Person"
+                            "$ref": "#/definitions/api_handlers.Person"
                         }
                     }
                 ],
@@ -285,13 +342,13 @@ const docTemplate = `{
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/helper.BaseHttpResponse"
+                            "$ref": "#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse"
                         }
                     },
                     "400": {
                         "description": "Failure",
                         "schema": {
-                            "$ref": "#/definitions/helper.BaseHttpResponse"
+                            "$ref": "#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse"
                         }
                     }
                 }
@@ -317,7 +374,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.RegisterLoginByMobileNumber"
+                            "$ref": "#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_dto.RegisterLoginByMobileNumber"
                         }
                     }
                 ],
@@ -325,19 +382,19 @@ const docTemplate = `{
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/helper.BaseHttpResponse"
+                            "$ref": "#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse"
                         }
                     },
                     "400": {
                         "description": "Failure",
                         "schema": {
-                            "$ref": "#/definitions/helper.BaseHttpResponse"
+                            "$ref": "#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse"
                         }
                     },
                     "409": {
                         "description": "Failure",
                         "schema": {
-                            "$ref": "#/definitions/helper.BaseHttpResponse"
+                            "$ref": "#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse"
                         }
                     }
                 }
@@ -363,7 +420,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.LoginByUsernameRequest"
+                            "$ref": "#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_dto.LoginByUsernameRequest"
                         }
                     }
                 ],
@@ -371,19 +428,19 @@ const docTemplate = `{
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/helper.BaseHttpResponse"
+                            "$ref": "#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse"
                         }
                     },
                     "400": {
                         "description": "Failure",
                         "schema": {
-                            "$ref": "#/definitions/helper.BaseHttpResponse"
+                            "$ref": "#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse"
                         }
                     },
                     "409": {
                         "description": "Failure",
                         "schema": {
-                            "$ref": "#/definitions/helper.BaseHttpResponse"
+                            "$ref": "#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse"
                         }
                     }
                 }
@@ -409,7 +466,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.RegisterUserByUsernameRequest"
+                            "$ref": "#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_dto.RegisterUserByUsernameRequest"
                         }
                     }
                 ],
@@ -417,19 +474,19 @@ const docTemplate = `{
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/helper.BaseHttpResponse"
+                            "$ref": "#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse"
                         }
                     },
                     "400": {
                         "description": "Failure",
                         "schema": {
-                            "$ref": "#/definitions/helper.BaseHttpResponse"
+                            "$ref": "#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse"
                         }
                     },
                     "409": {
                         "description": "Failure",
                         "schema": {
-                            "$ref": "#/definitions/helper.BaseHttpResponse"
+                            "$ref": "#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse"
                         }
                     }
                 }
@@ -455,7 +512,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.GetOtpRequest"
+                            "$ref": "#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_dto.GetOtpRequest"
                         }
                     }
                 ],
@@ -463,19 +520,19 @@ const docTemplate = `{
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/helper.BaseHttpResponse"
+                            "$ref": "#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse"
                         }
                     },
                     "400": {
                         "description": "Failure",
                         "schema": {
-                            "$ref": "#/definitions/helper.BaseHttpResponse"
+                            "$ref": "#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse"
                         }
                     },
                     "409": {
                         "description": "Failure",
                         "schema": {
-                            "$ref": "#/definitions/helper.BaseHttpResponse"
+                            "$ref": "#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse"
                         }
                     }
                 }
@@ -483,9 +540,30 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "dto.CountryResponse": {
+        "api_handlers.Person": {
+            "type": "object",
+            "required": [
+                "first_name",
+                "phone"
+            ],
+            "properties": {
+                "first_name": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_mohammad-ebrahimi-it_car-shoping_api_dto.CityResponse": {
             "type": "object",
             "properties": {
+                "country": {
+                    "$ref": "#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_dto.CountryResponse"
+                },
                 "id": {
                     "type": "integer"
                 },
@@ -494,7 +572,24 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.CreateUpdateCountryRequest": {
+        "github_com_mohammad-ebrahimi-it_car-shoping_api_dto.CountryResponse": {
+            "type": "object",
+            "properties": {
+                "cities": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_dto.CityResponse"
+                    }
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_mohammad-ebrahimi-it_car-shoping_api_dto.CreateUpdateCountryRequest": {
             "type": "object",
             "required": [
                 "name"
@@ -507,7 +602,24 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.GetOtpRequest": {
+        "github_com_mohammad-ebrahimi-it_car-shoping_api_dto.Filter": {
+            "type": "object",
+            "properties": {
+                "filter_type": {
+                    "type": "string"
+                },
+                "from": {
+                    "type": "string"
+                },
+                "to": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_mohammad-ebrahimi-it_car-shoping_api_dto.GetOtpRequest": {
             "type": "object",
             "required": [
                 "mobile_number"
@@ -520,7 +632,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.LoginByUsernameRequest": {
+        "github_com_mohammad-ebrahimi-it_car-shoping_api_dto.LoginByUsernameRequest": {
             "type": "object",
             "required": [
                 "password",
@@ -536,7 +648,56 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.RegisterLoginByMobileNumber": {
+        "github_com_mohammad-ebrahimi-it_car-shoping_api_dto.PageList-github_com_mohammad-ebrahimi-it_car-shoping_api_dto_CountryResponse": {
+            "type": "object",
+            "properties": {
+                "has_next_page": {
+                    "type": "boolean"
+                },
+                "has_previous_page": {
+                    "type": "boolean"
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_dto.CountryResponse"
+                    }
+                },
+                "page_number": {
+                    "type": "integer"
+                },
+                "total_pages": {
+                    "type": "integer"
+                },
+                "total_rows": {
+                    "type": "integer"
+                }
+            }
+        },
+        "github_com_mohammad-ebrahimi-it_car-shoping_api_dto.PaginationInputWithFilter": {
+            "type": "object",
+            "properties": {
+                "filter": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_dto.Filter"
+                    }
+                },
+                "page_number": {
+                    "type": "integer"
+                },
+                "page_size": {
+                    "type": "integer"
+                },
+                "sort": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_dto.Sort"
+                    }
+                }
+            }
+        },
+        "github_com_mohammad-ebrahimi-it_car-shoping_api_dto.RegisterLoginByMobileNumber": {
             "type": "object",
             "required": [
                 "mobileNumber",
@@ -555,7 +716,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.RegisterUserByUsernameRequest": {
+        "github_com_mohammad-ebrahimi-it_car-shoping_api_dto.RegisterUserByUsernameRequest": {
             "type": "object",
             "required": [
                 "email",
@@ -587,25 +748,18 @@ const docTemplate = `{
                 }
             }
         },
-        "handlers.Person": {
+        "github_com_mohammad-ebrahimi-it_car-shoping_api_dto.Sort": {
             "type": "object",
-            "required": [
-                "first_name",
-                "phone"
-            ],
             "properties": {
-                "first_name": {
+                "col_id": {
                     "type": "string"
                 },
-                "last_name": {
-                    "type": "string"
-                },
-                "phone": {
+                "sort": {
                     "type": "string"
                 }
             }
         },
-        "helper.BaseHttpResponse": {
+        "github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse": {
             "type": "object",
             "properties": {
                 "error": {},
@@ -619,12 +773,12 @@ const docTemplate = `{
                 "validationErrors": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/validations.ValidationError"
+                        "$ref": "#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_validations.ValidationError"
                     }
                 }
             }
         },
-        "validations.ValidationError": {
+        "github_com_mohammad-ebrahimi-it_car-shoping_api_validations.ValidationError": {
             "type": "object",
             "properties": {
                 "message": {

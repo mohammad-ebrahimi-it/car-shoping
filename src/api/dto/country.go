@@ -9,6 +9,18 @@ type CreateCountryResponse struct {
 }
 
 type CountryResponse struct {
+	Id     int            `json:"id"`
+	Name   string         `json:"name"`
+	Cities []CityResponse `json:"cities"`
+}
+
+type CreateCityResponse struct {
 	Id   int    `json:"id"`
 	Name string `json:"name"`
+}
+
+type CityResponse struct {
+	Id      int             `json:"id"`
+	Name    string          `json:"name"`
+	Country CountryResponse `json:"country"`
 }
