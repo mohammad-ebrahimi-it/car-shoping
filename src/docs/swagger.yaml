@@ -31,6 +31,18 @@ definitions:
       name:
         type: string
     type: object
+  github_com_mohammad-ebrahimi-it_car-shoping_api_dto.CreateUpdateCityRequest:
+    properties:
+      countryId:
+        type: integer
+      name:
+        maxLength: 20
+        minLength: 3
+        type: string
+    required:
+    - countryId
+    - name
+    type: object
   github_com_mohammad-ebrahimi-it_car-shoping_api_dto.CreateUpdateCountryRequest:
     properties:
       name:
@@ -70,6 +82,23 @@ definitions:
     required:
     - password
     - username
+    type: object
+  github_com_mohammad-ebrahimi-it_car-shoping_api_dto.PageList-github_com_mohammad-ebrahimi-it_car-shoping_api_dto_CityResponse:
+    properties:
+      has_next_page:
+        type: boolean
+      has_previous_page:
+        type: boolean
+      items:
+        items:
+          $ref: '#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_dto.CityResponse'
+        type: array
+      page_number:
+        type: integer
+      total_pages:
+        type: integer
+      total_rows:
+        type: integer
     type: object
   github_com_mohammad-ebrahimi-it_car-shoping_api_dto.PageList-github_com_mohammad-ebrahimi-it_car-shoping_api_dto_CountryResponse:
     properties:
@@ -175,6 +204,167 @@ definitions:
 info:
   contact: {}
 paths:
+  /v1/cities:
+    post:
+      consumes:
+      - application/json
+      description: Create a City
+      parameters:
+      - description: Create a City
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_dto.CreateUpdateCityRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: City response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_dto.CityResponse'
+              type: object
+        "400":
+          description: Failure
+          schema:
+            $ref: '#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Create a City
+      tags:
+      - Cities
+  /v1/cities/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a City
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Success
+          schema:
+            $ref: '#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse'
+        "400":
+          description: Failure
+          schema:
+            $ref: '#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Delete a City
+      tags:
+      - Cities
+    get:
+      consumes:
+      - application/json
+      description: Get a City
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: City response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_dto.CityResponse'
+              type: object
+        "400":
+          description: Failure
+          schema:
+            $ref: '#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Get a City
+      tags:
+      - Cities
+    put:
+      consumes:
+      - application/json
+      description: Update a City
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Update a City
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_dto.CreateUpdateCityRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: City response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_dto.CityResponse'
+              type: object
+        "400":
+          description: Failure
+          schema:
+            $ref: '#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Update a City
+      tags:
+      - Cities
+  /v1/cities/get-by-filter:
+    post:
+      consumes:
+      - application/json
+      description: Get Cities
+      parameters:
+      - description: Request
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_dto.PaginationInputWithFilter'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: City response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_dto.PageList-github_com_mohammad-ebrahimi-it_car-shoping_api_dto_CityResponse'
+              type: object
+        "400":
+          description: Failure
+          schema:
+            $ref: '#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Get Cities
+      tags:
+      - Cities
   /v1/countries:
     post:
       consumes:
@@ -502,7 +692,7 @@ paths:
       - users
 securityDefinitions:
   AuthBearer:
-    in: header
+    in: bearer
     name: Authorization
     type: apiKey
 swagger: "2.0"

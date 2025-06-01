@@ -99,7 +99,7 @@ func Authorization(validRoles []string) gin.HandlerFunc {
 		}
 
 		for _, role := range validRoles {
-			if _, ok := val[role]; !ok {
+			if _, ok := val[role]; ok {
 				c.Next()
 				return
 			}

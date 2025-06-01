@@ -6,5 +6,5 @@ type CarModelYear struct {
 	CarModelId           int
 	PersianYear          PersianYear `gorm:"foreignKey:PersianYearId;constraint:OnUpdate:NO ACTION,OnDelete:NO ACTION;"`
 	PersianYearId        int
-	CarModelPriceHistory *[]CarModelPriceHistory
+	CarModelPriceHistory *[]CarModelPriceHistory `gorm:"foreignKey:CarModelId"`
 }

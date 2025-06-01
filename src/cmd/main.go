@@ -10,7 +10,7 @@ import (
 )
 
 // @securityDefinitions.apikey AuthBearer
-// @in header
+// @in bearer
 // @name Authorization
 func main() {
 	cfg := config.GetConfig()
