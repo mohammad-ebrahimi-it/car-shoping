@@ -8,6 +8,7 @@ type ExtraKey string
 
 const (
 	Internal        Category = "Internal"
+	IO              Category = "IO"
 	General         Category = "General"
 	Postgres        Category = "Postgres"
 	Redis           Category = "Redis"
@@ -32,6 +33,10 @@ const (
 
 	MobileValidation   SubCategory = "MobileValidation"
 	PasswordValidation SubCategory = "PasswordValidation"
+
+	//IO
+
+	RemoveFile SubCategory = "RemoveFile"
 )
 
 const (

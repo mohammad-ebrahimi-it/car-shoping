@@ -36,6 +36,25 @@ func createTables(database *gorm.DB) {
 	tables = addNameTable(database, user, tables)
 	tables = addNameTable(database, city, tables)
 
+	tables = addNameTable(database, models.File{}, tables)
+	tables = addNameTable(database, models.PersianYear{}, tables)
+
+	tables = addNameTable(database, models.PropertyCategory{}, tables)
+	tables = addNameTable(database, models.Property{}, tables)
+
+	tables = addNameTable(database, models.Company{}, tables)
+	tables = addNameTable(database, models.Gearbox{}, tables)
+	tables = addNameTable(database, models.Color{}, tables)
+	tables = addNameTable(database, models.CarType{}, tables)
+
+	tables = addNameTable(database, models.CarModel{}, tables)
+	tables = addNameTable(database, models.CarModelColor{}, tables)
+	tables = addNameTable(database, models.CarModelYear{}, tables)
+	tables = addNameTable(database, models.CarModelImage{}, tables)
+	tables = addNameTable(database, models.CarModelPriceHistory{}, tables)
+	tables = addNameTable(database, models.CarModelProperty{}, tables)
+	tables = addNameTable(database, models.CarModelComment{}, tables)
+
 	err := database.Migrator().CreateTable(tables...)
 
 	if err != nil {

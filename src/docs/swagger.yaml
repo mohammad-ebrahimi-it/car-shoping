@@ -52,6 +52,19 @@ definitions:
     required:
     - name
     type: object
+  github_com_mohammad-ebrahimi-it_car-shoping_api_dto.FileResponse:
+    properties:
+      description:
+        type: string
+      directory:
+        type: string
+      id:
+        type: integer
+      mimeType:
+        type: string
+      name:
+        type: string
+    type: object
   github_com_mohammad-ebrahimi-it_car-shoping_api_dto.Filter:
     properties:
       filter_type:
@@ -109,6 +122,23 @@ definitions:
       items:
         items:
           $ref: '#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_dto.CountryResponse'
+        type: array
+      page_number:
+        type: integer
+      total_pages:
+        type: integer
+      total_rows:
+        type: integer
+    type: object
+  github_com_mohammad-ebrahimi-it_car-shoping_api_dto.PageList-github_com_mohammad-ebrahimi-it_car-shoping_api_dto_FileResponse:
+    properties:
+      has_next_page:
+        type: boolean
+      has_previous_page:
+        type: boolean
+      items:
+        items:
+          $ref: '#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_dto.FileResponse'
         type: array
       page_number:
         type: integer
@@ -175,6 +205,11 @@ definitions:
       col_id:
         type: string
       sort:
+        type: string
+    type: object
+  github_com_mohammad-ebrahimi-it_car-shoping_api_dto.UpdateFileRequest:
+    properties:
+      description:
         type: string
     type: object
   github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse:
@@ -526,6 +561,170 @@ paths:
       summary: Get Countries
       tags:
       - Countries
+  /v1/files/:
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: Create a File
+      parameters:
+      - in: formData
+        name: description
+        required: true
+        type: string
+      - description: Create a file
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: File response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_dto.FileResponse'
+              type: object
+        "400":
+          description: Failure
+          schema:
+            $ref: '#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Create a File
+      tags:
+      - Files
+  /v1/files/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a File
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Success
+          schema:
+            $ref: '#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse'
+        "400":
+          description: Failure
+          schema:
+            $ref: '#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Delete a File
+      tags:
+      - Files
+    get:
+      consumes:
+      - application/json
+      description: Get a File
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: File response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_dto.FileResponse'
+              type: object
+        "400":
+          description: Failure
+          schema:
+            $ref: '#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Get a File
+      tags:
+      - Files
+    put:
+      consumes:
+      - application/json
+      description: Update a File
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Update a File
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_dto.UpdateFileRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: File response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_dto.FileResponse'
+              type: object
+        "400":
+          description: Failure
+          schema:
+            $ref: '#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Update a File
+      tags:
+      - Files
+  /v1/files/get-by-filter:
+    post:
+      consumes:
+      - application/json
+      description: Get Files
+      parameters:
+      - description: Request
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_dto.PaginationInputWithFilter'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: File response
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_dto.PageList-github_com_mohammad-ebrahimi-it_car-shoping_api_dto_FileResponse'
+              type: object
+        "400":
+          description: Failure
+          schema:
+            $ref: '#/definitions/github_com_mohammad-ebrahimi-it_car-shoping_api_helper.BaseHttpResponse'
+      security:
+      - AuthBearer: []
+      summary: Get Files
+      tags:
+      - Files
   /v1/health/:
     get:
       consumes:
