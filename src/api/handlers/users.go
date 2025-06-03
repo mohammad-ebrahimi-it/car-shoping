@@ -35,7 +35,7 @@ func (uh *UsersHandler) SendOtp(c *gin.Context) {
 	if err != nil {
 		c.AbortWithStatusJSON(
 			http.StatusBadRequest,
-			helper.GenerateBaseResponseWithValidationError(nil, false, -1, err),
+			helper.GenerateBaseResponseWithValidationError(nil, false, helper.ValidationError, err),
 		)
 		return
 	}
@@ -45,12 +45,12 @@ func (uh *UsersHandler) SendOtp(c *gin.Context) {
 	if err != nil {
 		c.AbortWithStatusJSON(
 			helper.TranslateErrorToStatusCode(err),
-			helper.GenerateBaseResponseWithError(nil, false, -1, err),
+			helper.GenerateBaseResponseWithError(nil, false, helper.InternalError, err),
 		)
 		return
 	}
 
-	c.JSON(http.StatusOK, helper.GenerateBaseResponse(nil, true, 0))
+	c.JSON(http.StatusOK, helper.GenerateBaseResponse(nil, true, helper.Success))
 }
 
 // LoginByUsername user
@@ -70,7 +70,7 @@ func (uh *UsersHandler) LoginByUsername(c *gin.Context) {
 	if err != nil {
 		c.AbortWithStatusJSON(
 			http.StatusBadRequest,
-			helper.GenerateBaseResponseWithValidationError(nil, false, -1, err),
+			helper.GenerateBaseResponseWithValidationError(nil, false, helper.ValidationError, err),
 		)
 		return
 	}
@@ -80,12 +80,12 @@ func (uh *UsersHandler) LoginByUsername(c *gin.Context) {
 	if err != nil {
 		c.AbortWithStatusJSON(
 			helper.TranslateErrorToStatusCode(err),
-			helper.GenerateBaseResponseWithError(nil, false, -1, err),
+			helper.GenerateBaseResponseWithError(nil, false, helper.InternalError, err),
 		)
 		return
 	}
 
-	c.JSON(http.StatusOK, helper.GenerateBaseResponse(token, true, 0))
+	c.JSON(http.StatusOK, helper.GenerateBaseResponse(token, true, helper.Success))
 }
 
 // RegisterByUsername user
@@ -105,7 +105,7 @@ func (uh *UsersHandler) RegisterByUsername(c *gin.Context) {
 	if err != nil {
 		c.AbortWithStatusJSON(
 			http.StatusBadRequest,
-			helper.GenerateBaseResponseWithValidationError(nil, false, -1, err),
+			helper.GenerateBaseResponseWithValidationError(nil, false, helper.ValidationError, err),
 		)
 		return
 	}
@@ -115,12 +115,12 @@ func (uh *UsersHandler) RegisterByUsername(c *gin.Context) {
 	if err != nil {
 		c.AbortWithStatusJSON(
 			helper.TranslateErrorToStatusCode(err),
-			helper.GenerateBaseResponseWithError(nil, false, -1, err),
+			helper.GenerateBaseResponseWithError(nil, false, helper.InternalError, err),
 		)
 		return
 	}
 
-	c.JSON(http.StatusOK, helper.GenerateBaseResponse(nil, true, 0))
+	c.JSON(http.StatusOK, helper.GenerateBaseResponse(nil, true, helper.Success))
 }
 
 // RegisterLoginByMobileNumber user
@@ -140,7 +140,7 @@ func (uh *UsersHandler) RegisterLoginByMobileNumber(c *gin.Context) {
 	if err != nil {
 		c.AbortWithStatusJSON(
 			http.StatusBadRequest,
-			helper.GenerateBaseResponseWithValidationError(nil, false, -1, err),
+			helper.GenerateBaseResponseWithValidationError(nil, false, helper.ValidationError, err),
 		)
 		return
 	}
@@ -150,10 +150,10 @@ func (uh *UsersHandler) RegisterLoginByMobileNumber(c *gin.Context) {
 	if err != nil {
 		c.AbortWithStatusJSON(
 			helper.TranslateErrorToStatusCode(err),
-			helper.GenerateBaseResponseWithError(nil, false, -1, err),
+			helper.GenerateBaseResponseWithError(nil, false, helper.InternalError, err),
 		)
 		return
 	}
 
-	c.JSON(http.StatusOK, helper.GenerateBaseResponse(token, true, 0))
+	c.JSON(http.StatusOK, helper.GenerateBaseResponse(token, true, helper.Success))
 }

@@ -6,5 +6,5 @@ type CarModelComment struct {
 	CarModelId int
 	User       User `gorm:"foreignKey:UserId;constraint:OnUpdate:NO ACTION,OnDelete:NO ACTION;"`
 	UserId     int
-	Message    string `gorm:"size:500;type:string:not null"`
+	Message    string `gorm:"type:varchar(500);not null"`
 }

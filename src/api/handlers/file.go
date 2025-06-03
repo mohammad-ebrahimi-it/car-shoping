@@ -18,8 +18,6 @@ import (
 	"strings"
 )
 
-var logger = logging.NewLogger(config.GetConfig())
-
 type FileHandler struct {
 	service *services.FileService
 }
@@ -50,7 +48,7 @@ func (h *FileHandler) Create(c *gin.Context) {
 	if err != nil {
 		c.AbortWithStatusJSON(
 			helper.TranslateErrorToStatusCode(err),
-			helper.GenerateBaseResponseWithError(nil, false, -400, err))
+			helper.GenerateBaseResponseWithError(nil, false, helper.ValidationError, err))
 		return
 	}
 
@@ -65,7 +63,7 @@ func (h *FileHandler) Create(c *gin.Context) {
 	if err != nil {
 		c.AbortWithStatusJSON(
 			helper.TranslateErrorToStatusCode(err),
-			helper.GenerateBaseResponseWithError(nil, false, -400, err))
+			helper.GenerateBaseResponseWithError(nil, false, helper.ValidationError, err))
 		return
 	}
 
@@ -74,11 +72,11 @@ func (h *FileHandler) Create(c *gin.Context) {
 	if err != nil {
 		c.AbortWithStatusJSON(
 			helper.TranslateErrorToStatusCode(err),
-			helper.GenerateBaseResponseWithError(nil, false, -400, err))
+			helper.GenerateBaseResponseWithError(nil, false, helper.InternalError, err))
 		return
 	}
 
-	c.JSON(http.StatusCreated, helper.GenerateBaseResponse(res, true, 0))
+	c.JSON(http.StatusCreated, helper.GenerateBaseResponse(res, true, helper.Success))
 
 }
 
@@ -95,28 +93,7 @@ func (h *FileHandler) Create(c *gin.Context) {
 // @Router /v1/files/{id} [put]
 // @Security AuthBearer
 func (h *FileHandler) UpdateFile(c *gin.Context) {
-
-	id, _ := strconv.Atoi(c.Params.ByName("id"))
-
-	req := &dto.UpdateFileRequest{}
-
-	err := c.ShouldBindJSON(req)
-
-	if err != nil {
-		c.AbortWithStatusJSON(http.StatusBadRequest, helper.GenerateBaseResponseWithValidationError(nil, false, -400, err))
-		return
-	}
-
-	res, err := h.service.Update(c, id, req)
-
-	if err != nil {
-		c.AbortWithStatusJSON(helper.TranslateErrorToStatusCode(err), helper.GenerateBaseResponseWithError(nil, false, -400, err))
-		return
-	}
-
-	c.JSON(http.StatusOK, helper.GenerateBaseResponse(res, true, 0))
-
-	return
+	Update(c, h.service.Update)
 }
 
 // DeleteFile godoc
@@ -134,7 +111,7 @@ func (h *FileHandler) DeleteFile(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Params.ByName("id"))
 
 	if id == 0 {
-		c.AbortWithStatusJSON(http.StatusNotFound, helper.GenerateBaseResponseWithError(nil, false, -404, errors.New("id not found")))
+		c.AbortWithStatusJSON(http.StatusNotFound, helper.GenerateBaseResponseWithError(nil, false, helper.NotFoundError, errors.New("id not found")))
 
 		return
 	}
@@ -144,7 +121,7 @@ func (h *FileHandler) DeleteFile(c *gin.Context) {
 	if err != nil {
 		c.AbortWithStatusJSON(
 			helper.TranslateErrorToStatusCode(err),
-			helper.GenerateBaseResponseWithError(nil, false, -400, err),
+			helper.GenerateBaseResponseWithError(nil, false, helper.InternalError, err),
 		)
 		return
 	}
@@ -154,7 +131,7 @@ func (h *FileHandler) DeleteFile(c *gin.Context) {
 		logger.Error(logging.IO, logging.RemoveFile, err.Error(), nil)
 		c.AbortWithStatusJSON(
 			helper.TranslateErrorToStatusCode(err),
-			helper.GenerateBaseResponseWithError(nil, false, -400, err),
+			helper.GenerateBaseResponseWithError(nil, false, helper.InternalError, err),
 		)
 		return
 	}
@@ -164,12 +141,12 @@ func (h *FileHandler) DeleteFile(c *gin.Context) {
 	if err != nil {
 		c.AbortWithStatusJSON(
 			helper.TranslateErrorToStatusCode(err),
-			helper.GenerateBaseResponseWithError(nil, false, -400, err),
+			helper.GenerateBaseResponseWithError(nil, false, helper.InternalError, err),
 		)
 		return
 	}
 
-	c.JSON(http.StatusOK, helper.GenerateBaseResponse(nil, true, 0))
+	c.JSON(http.StatusOK, helper.GenerateBaseResponse(nil, true, helper.Success))
 	return
 }
 
@@ -185,28 +162,7 @@ func (h *FileHandler) DeleteFile(c *gin.Context) {
 // @Router /v1/files/{id} [get]
 // @Security AuthBearer
 func (h *FileHandler) GetFileById(c *gin.Context) {
-	id, _ := strconv.Atoi(c.Params.ByName("id"))
-
-	if id == 0 {
-		c.AbortWithStatusJSON(http.StatusNotFound, helper.GenerateBaseResponseWithError(nil, false, -404, errors.New("id not found")))
-
-		return
-	}
-
-	res, err := h.service.GetByID(c, id)
-
-	if err != nil {
-		c.AbortWithStatusJSON(
-			helper.TranslateErrorToStatusCode(err),
-			helper.GenerateBaseResponseWithError(nil, false, -400, err),
-		)
-
-		return
-	}
-
-	c.JSON(http.StatusOK, helper.GenerateBaseResponse(res, true, 0))
-
-	return
+	GetById(c, h.service.GetByID)
 }
 
 // GetByFilter godoc
@@ -221,27 +177,7 @@ func (h *FileHandler) GetFileById(c *gin.Context) {
 // @Router /v1/files/get-by-filter [post]
 // @Security AuthBearer
 func (h *FileHandler) GetByFilter(c *gin.Context) {
-	req := dto.PaginationInputWithFilter{}
-
-	err := c.ShouldBindQuery(&req)
-
-	if err != nil {
-		c.AbortWithStatusJSON(
-			helper.TranslateErrorToStatusCode(err),
-			helper.GenerateBaseResponseWithError(nil, false, -400, err))
-		return
-	}
-
-	res, err := h.service.GetByFilter(c, &req)
-
-	if err != nil {
-		c.AbortWithStatusJSON(
-			helper.TranslateErrorToStatusCode(err),
-			helper.GenerateBaseResponseWithError(nil, false, -400, err))
-		return
-	}
-
-	c.JSON(http.StatusOK, helper.GenerateBaseResponse(res, true, 0))
+	GetByFilter(c, h.service.GetByFilter)
 }
 
 func saveUploadFile(file *multipart.FileHeader, directory string) (string, error) {

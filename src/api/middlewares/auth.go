@@ -47,7 +47,7 @@ func Authentication(cfg *config.Config) gin.HandlerFunc {
 		if err != nil {
 			c.AbortWithStatusJSON(
 				http.StatusUnauthorized,
-				helper.GenerateBaseResponseWithError(nil, false, -401, err),
+				helper.GenerateBaseResponseWithError(nil, false, helper.AuthError, err),
 			)
 			return
 		}
@@ -71,7 +71,7 @@ func Authorization(validRoles []string) gin.HandlerFunc {
 		if len(c.Keys) == 0 {
 			c.AbortWithStatusJSON(
 				http.StatusForbidden,
-				helper.GenerateBaseResponse(nil, false, -403),
+				helper.GenerateBaseResponse(nil, false, helper.ForbiddenError),
 			)
 
 			return
@@ -84,7 +84,7 @@ func Authorization(validRoles []string) gin.HandlerFunc {
 		if rolesVal == nil {
 			c.AbortWithStatusJSON(
 				http.StatusForbidden,
-				helper.GenerateBaseResponse(nil, false, -403),
+				helper.GenerateBaseResponse(nil, false, helper.ForbiddenError),
 			)
 
 			return
@@ -107,7 +107,7 @@ func Authorization(validRoles []string) gin.HandlerFunc {
 
 		c.AbortWithStatusJSON(
 			http.StatusForbidden,
-			helper.GenerateBaseResponse(nil, false, -403),
+			helper.GenerateBaseResponse(nil, false, helper.ForbiddenError),
 		)
 		return
 	}

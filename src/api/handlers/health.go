@@ -28,7 +28,7 @@ func NewHealthHandler() *HealthHandler {
 // @Failure 400 {object} helper.BaseHttpResponse "Failure"
 // @Router /v1/health/ [get]
 func (h *HealthHandler) Health(c *gin.Context) {
-	c.JSON(200, helper.GenerateBaseResponse("ebi", true, 0))
+	c.JSON(200, helper.GenerateBaseResponse("ebi", true, helper.Success))
 	return
 }
 
@@ -49,7 +49,7 @@ func (h *HealthHandler) HealthPost(c *gin.Context) {
 
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest,
-			helper.GenerateBaseResponseWithValidationError(nil, false, 1, err))
+			helper.GenerateBaseResponseWithValidationError(nil, false, helper.ValidationError, err))
 		return
 	}
 	c.JSON(200, gin.H{

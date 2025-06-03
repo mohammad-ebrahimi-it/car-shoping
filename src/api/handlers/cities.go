@@ -1,14 +1,11 @@
 package handlers
 
 import (
-	"errors"
 	"github.com/gin-gonic/gin"
-	"github.com/mohammad-ebrahimi-it/car-shoping/api/dto"
-	"github.com/mohammad-ebrahimi-it/car-shoping/api/helper"
+	_ "github.com/mohammad-ebrahimi-it/car-shoping/api/dto"
+	_ "github.com/mohammad-ebrahimi-it/car-shoping/api/helper"
 	"github.com/mohammad-ebrahimi-it/car-shoping/config"
 	"github.com/mohammad-ebrahimi-it/car-shoping/services"
-	"net/http"
-	"strconv"
 )
 
 type CityHandler struct {
@@ -33,34 +30,7 @@ func NewCityHandler(cfg *config.Config) *CityHandler {
 // @Router /v1/cities [post]
 // @Security AuthBearer
 func (h *CityHandler) CreateCity(c *gin.Context) {
-	req := &dto.CreateUpdateCityRequest{}
-
-	err := c.ShouldBindJSON(req)
-
-	if err != nil {
-		c.AbortWithStatusJSON(
-			http.StatusBadRequest,
-			helper.GenerateBaseResponseWithValidationError(nil, false, -400, err))
-
-		return
-	}
-
-	res, err := h.service.Create(c, req)
-
-	if err != nil {
-		c.AbortWithStatusJSON(
-			helper.TranslateErrorToStatusCode(err),
-			helper.GenerateBaseResponseWithError(nil, false, -400, err),
-		)
-
-		return
-	}
-
-	c.JSON(http.StatusOK, helper.GenerateBaseResponse(
-		res,
-		true,
-		0))
-	return
+	Create(c, h.service.Create)
 }
 
 // UpdateCity godoc
@@ -76,28 +46,7 @@ func (h *CityHandler) CreateCity(c *gin.Context) {
 // @Router /v1/cities/{id} [put]
 // @Security AuthBearer
 func (h *CityHandler) UpdateCity(c *gin.Context) {
-
-	id, _ := strconv.Atoi(c.Params.ByName("id"))
-
-	req := &dto.CreateUpdateCityRequest{}
-
-	err := c.ShouldBindJSON(req)
-
-	if err != nil {
-		c.AbortWithStatusJSON(http.StatusBadRequest, helper.GenerateBaseResponseWithValidationError(nil, false, -400, err))
-		return
-	}
-
-	res, err := h.service.Update(c, id, req)
-
-	if err != nil {
-		c.AbortWithStatusJSON(helper.TranslateErrorToStatusCode(err), helper.GenerateBaseResponseWithError(nil, false, -400, err))
-		return
-	}
-
-	c.JSON(http.StatusOK, helper.GenerateBaseResponse(res, true, 0))
-
-	return
+	Update(c, h.service.Update)
 }
 
 // DeleteCity godoc
@@ -112,26 +61,7 @@ func (h *CityHandler) UpdateCity(c *gin.Context) {
 // @Router /v1/cities/{id} [delete]
 // @Security AuthBearer
 func (h *CityHandler) DeleteCity(c *gin.Context) {
-	id, _ := strconv.Atoi(c.Params.ByName("id"))
-
-	if id == 0 {
-		c.AbortWithStatusJSON(http.StatusNotFound, helper.GenerateBaseResponseWithError(nil, false, -404, errors.New("id not found")))
-
-		return
-	}
-
-	err := h.service.Delete(c, id)
-
-	if err != nil {
-		c.AbortWithStatusJSON(
-			helper.TranslateErrorToStatusCode(err),
-			helper.GenerateBaseResponseWithError(nil, false, -400, err),
-		)
-		return
-	}
-
-	c.JSON(http.StatusOK, helper.GenerateBaseResponse(nil, true, 0))
-	return
+	Delete(c, h.service.Delete)
 }
 
 // GetCityById godoc
@@ -146,28 +76,7 @@ func (h *CityHandler) DeleteCity(c *gin.Context) {
 // @Router /v1/cities/{id} [get]
 // @Security AuthBearer
 func (h *CityHandler) GetCityById(c *gin.Context) {
-	id, _ := strconv.Atoi(c.Params.ByName("id"))
-
-	if id == 0 {
-		c.AbortWithStatusJSON(http.StatusNotFound, helper.GenerateBaseResponseWithError(nil, false, -404, errors.New("id not found")))
-
-		return
-	}
-
-	res, err := h.service.GetByID(c, id)
-
-	if err != nil {
-		c.AbortWithStatusJSON(
-			helper.TranslateErrorToStatusCode(err),
-			helper.GenerateBaseResponseWithError(nil, false, -400, err),
-		)
-
-		return
-	}
-
-	c.JSON(http.StatusOK, helper.GenerateBaseResponse(res, true, 0))
-
-	return
+	GetById(c, h.service.GetByID)
 }
 
 // GetByFilter godoc
@@ -182,25 +91,5 @@ func (h *CityHandler) GetCityById(c *gin.Context) {
 // @Router /v1/cities/get-by-filter [post]
 // @Security AuthBearer
 func (h *CityHandler) GetByFilter(c *gin.Context) {
-	req := dto.PaginationInputWithFilter{}
-
-	err := c.ShouldBindQuery(&req)
-
-	if err != nil {
-		c.AbortWithStatusJSON(
-			helper.TranslateErrorToStatusCode(err),
-			helper.GenerateBaseResponseWithError(nil, false, -400, err))
-		return
-	}
-
-	res, err := h.service.GetByFilter(c, &req)
-
-	if err != nil {
-		c.AbortWithStatusJSON(
-			helper.TranslateErrorToStatusCode(err),
-			helper.GenerateBaseResponseWithError(nil, false, -400, err))
-		return
-	}
-
-	c.JSON(http.StatusOK, helper.GenerateBaseResponse(res, true, 0))
+	GetByFilter(c, h.service.GetByFilter)
 }

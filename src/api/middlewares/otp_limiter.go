@@ -20,7 +20,7 @@ func OtpLimiter(cfg *config.Config) gin.HandlerFunc {
 		if !limit.Allow() {
 			c.AbortWithStatusJSON(
 				http.StatusTooManyRequests,
-				helper.GenerateBaseResponseWithError(nil, false, -1, errors.New("not allowed")),
+				helper.GenerateBaseResponseWithError(nil, false, helper.LimiterError, errors.New("not allowed")),
 			)
 			c.Abort()
 		}
